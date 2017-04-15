@@ -212,8 +212,8 @@ void final_result(){
 	FILE *fp1, *fp2;
    char ch;
  
-   fp1 = fopen("myfile.txt", "r");
-   fp2 = fopen("SampleFile_ExpressionEvaluator.txt", "w");
+   fp1 = fopen("HELPER_FILE", "r");//should delete this file at the end.
+   fp2 = fopen("FILE_NAME", "w");
  
    while (1) {
       ch = fgetc(fp1);
@@ -227,10 +227,19 @@ void final_result(){
    printf("File copied Successfully!");
    fclose(fp1);
    fclose(fp2);
+   int status = remove(HELPER_FILE);
+     
+    if( status == 0 )
+    printf("%s file deleted successfully.\n",HELPER_FILE);
+    else
+    {
+        printf("Unable to delete the file\n");
+        perror("Error");
+    }
 }
 int main(){
 	//Send the file to a function which will extract each expression individually
-    Expression_extractor("SampleFile_ExpressionEvaluator.txt");
+    Expression_extractor("FILE_NAME");
     final_result();
 	return 0;
 }
